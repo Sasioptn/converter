@@ -1,0 +1,39 @@
+<html>
+<head>
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/css/uikit.min.css"/>
+    <title>convert video to mp3</title>
+    <!-- UIkit JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/js/uikit-icons.min.js"></script>
+</head>
+<body>
+<div class="uk-card uk-card-default uk-card-body">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="uk-fieldset">
+            <div class="uk-margin">
+                {{ form.link.label(class="uk-form-label") }}
+                {% if form.link.errors %}
+                    {{ form.link(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.link.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.link(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        {{ form.submit(class="uk-button uk-button-primary") }}
+        <ul class="uk-list uk-list-bullet">
+
+            {% for d in data %}
+                <li>{{ d }}</li>
+            {% endfor %}
+
+    </form>
+</div>
+</body>
+</html>
