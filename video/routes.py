@@ -1,21 +1,27 @@
 from video import app
-from flask import redirect,render_template,url_for
+from flask import render_template
 from .forms import DownloadForm
-import youtube_dl
+from .models import Musics
+from video import db
+
+from.secondary_functions import download_mp3
 @app.route("/", methods=['GET','POST'])
 def home():
     data = []
     form = DownloadForm()
     if form.validate_on_submit():
-        a = form.link.data;
-        data.append(a)
-        ydl_opts = {
-            'format': 'bestaudio/best',
-            'postprocessors': [{
-                'key': 'FFmpegExtractAudio',
-                'preferredcodec': 'mp3',
-                'preferredquality': '320', }],
-        }
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([a])
+        new_link = form.link.data;
+        new_music = Musics(link=form.link.data)
+        db.session.add(new_music)
+        db.session.commit()
+        data = Musics.query.all()
+        return render_template('home.html', form = form,data = data,new_link = form.link.data)
     return render_template('home.html', form = form,data = data)
+
+@app.route("/download", methods=['GET','POST'])
+def download():
+    music = Musics.query.all()
+    last = music[0]
+    result = download_mp3(last.link)
+    return "Скачано!!!"
+

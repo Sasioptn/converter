@@ -8,6 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.5/js/uikit-icons.min.js"></script>
 </head>
 <body>
+
 <div class="uk-card uk-card-default uk-card-body">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
@@ -32,8 +33,16 @@
             {% for d in data %}
                 <li>{{ d }}</li>
             {% endfor %}
-
     </form>
+
 </div>
+
+
+    <h3 class="uk-card-title">Скачайте нажав на ссылку</h3>
+    <a href="{{ url_for('download',link=new_link) }}">
+        {{ new_link }}
+    </a>
+
+
 </body>
 </html>
